@@ -1,0 +1,3 @@
+"C:\Program Files\CMake\bin\cmake.exe" -E rm -f CMakeFiles\glfw_triangle.dir/objects.a
+D:\msys64\mingw64\bin\ar.exe qc CMakeFiles\glfw_triangle.dir/objects.a @CMakeFiles\glfw_triangle.dir\objects1.rsp
+D:\msys64\mingw64\bin\g++.exe -g -Wl,--whole-archive CMakeFiles\glfw_triangle.dir/objects.a -Wl,--no-whole-archive -o glfw_triangle.exe -Wl,--out-implib,libglfw_triangle.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\glfw_triangle.dir\linkLibs.rsp

@@ -1,0 +1,5 @@
+D:/adi/src/glfwTriangleExample/build/CMakeFiles/glfw_triangle.dir
+D:/adi/src/glfwTriangleExample/build/CMakeFiles/edit_cache.dir
+D:/adi/src/glfwTriangleExample/build/CMakeFiles/rebuild_cache.dir
+D:/adi/src/glfwTriangleExample/build/code/CMakeFiles/edit_cache.dir
+D:/adi/src/glfwTriangleExample/build/code/CMakeFiles/rebuild_cache.dir
