@@ -1,1 +1,1 @@
-GLFW triangle hello world"# glfwTriangleExample" 
+GLFW triangle hello world
