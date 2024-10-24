@@ -5,8 +5,8 @@
 #include <glm/gtc/type_ptr.hpp>
 #include <iostream>
 
-constexpr float window_width = 800.0; 
-constexpr float window_height = 600.0; 
+constexpr float window_width = 800.0;
+constexpr float window_height = 600.0;
 
 GLuint vao;
 GLuint vbo;
@@ -19,21 +19,20 @@ GLfloat vertices[] = {
     // Positions        // Colors
     -0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 0.0f, // Vertex 1: Red
     0.5f, -0.5f, 0.0f, 0.0f, 1.0f, 0.0f,  // Vertex 2: Green
-    0.0f, 0.5f, 0.0f, 1.0f, 1.0f, 1.0f    // Vertex 3: Blue
+    0.0f, 0.5f, 0.0f, 0.0f, 0.0f, 1.0f    // Vertex 3: Blue
 };
 
 // Indices for the triangle
-GLuint indices[] = {
-    0, 1, 2};
+GLuint indices[] = {0, 1, 2};
 
 float t_angle = 0.0f;
 glm::vec3 t_pos = glm::vec3(0.0f, 0.0f, 0.0f);
 constexpr float t_angle_speed = 1.0f;
 float t_speed_x = 0.3f;
-float t_speed_y = 0.5f;  
+float t_speed_y = 0.5f;
 
 float t_scale = 0.1f;
-float t_scale_speed = 0.1f;  
+float t_scale_speed = 0.1f;
 constexpr float t_scale_upp_limit = 0.8f;
 constexpr float t_scale_low_limit = 0.1f;
 
@@ -69,17 +68,28 @@ void processInput(GLFWwindow *window)
 void Update(float deltaTime)
 {
     t_angle += t_angle_speed * deltaTime;
-    if(t_angle >= 360.0f ) { t_angle -= 360.0f; }
+    if (t_angle >= 360.0f)
+    {
+        t_angle -= 360.0f;
+    }
 
-    t_pos.x += t_speed_x * deltaTime; 
+    t_pos.x += t_speed_x * deltaTime;
     t_pos.y += t_speed_y * deltaTime;
 
-    if(t_pos.x >= 1 || t_pos.x <= -1) { t_speed_x = -t_speed_x; }
-    if(t_pos.y >= 1 || t_pos.y <= -1) { t_speed_y = -t_speed_y; }
+    if (t_pos.x >= 1 || t_pos.x <= -1)
+    {
+        t_speed_x = -t_speed_x;
+    }
+    if (t_pos.y >= 1 || t_pos.y <= -1)
+    {
+        t_speed_y = -t_speed_y;
+    }
 
     t_scale += t_scale_speed * deltaTime;
-    if(t_scale >= t_scale_upp_limit || t_scale <= t_scale_low_limit) { t_scale_speed = -t_scale_speed; }
-
+    if (t_scale >= t_scale_upp_limit || t_scale <= t_scale_low_limit)
+    {
+        t_scale_speed = -t_scale_speed;
+    }
 }
 
 void Draw(float deltaTime)
@@ -91,10 +101,10 @@ void Draw(float deltaTime)
     glUseProgram(shaderProgram);
 
     // Create a transformation matrix
-    glm::mat4 transform = glm::mat4(1.0f);                                                  // Identity matrix
-    transform = glm::translate(transform, t_pos);                                           // Translation
-    transform = glm::rotate(transform, (float)t_angle, glm::vec3(0.0f, 0.0f, 1.0f));        // Rotation
-    transform = glm::scale(transform, glm::vec3(t_scale, t_scale, 1.0f));                   // Scale
+    glm::mat4 transform = glm::mat4(1.0f);                                           // Identity matrix
+    transform = glm::translate(transform, t_pos);                                    // Translation
+    transform = glm::rotate(transform, (float)t_angle, glm::vec3(0.0f, 0.0f, 1.0f)); // Rotation
+    transform = glm::scale(transform, glm::vec3(t_scale, t_scale, 1.0f));            // Scale
 
     // Set the uniform transform variable in the shader
     GLuint transformLoc = glGetUniformLocation(shaderProgram, "transform");
@@ -168,13 +178,18 @@ int main()
     glNamedBufferData(ebo, sizeof(indices), indices, GL_STATIC_DRAW);
 
     // Define vertex attributes
-    glVertexArrayVertexBuffer(vao, 0, vbo, 0, sizeof(GLfloat) * 6);                   // Position attribute
-    glVertexArrayVertexBuffer(vao, 1, vbo, sizeof(GLfloat) * 3, sizeof(GLfloat) * 6); // Color attribute
+    glVertexArrayVertexBuffer(vao, 0, vbo, 0, sizeof(GLfloat) * 6); // Position attribute
+    glVertexArrayVertexBuffer(vao, 1, vbo, 0, sizeof(GLfloat) * 6); // Color attribute
 
-    glEnableVertexArrayAttrib(vao, 0);                                             // Enable position attribute
-    glVertexArrayAttribFormat(vao, 0, 3, GL_FLOAT, GL_FALSE, 0);                   // 3 components for position
+    // Position attribute
+    glEnableVertexArrayAttrib(vao, 0);                           // Enable position attribute
+    glVertexArrayAttribFormat(vao, 0, 3, GL_FLOAT, GL_FALSE, 0); // 3 components for position
+    glVertexArrayAttribBinding(vao, 0, 0);                       // Bind to binding index 0
+
+    // Color attribute
     glEnableVertexArrayAttrib(vao, 1);                                             // Enable color attribute
-    glVertexArrayAttribFormat(vao, 1, 3, GL_FLOAT, GL_FALSE, sizeof(GLfloat) * 3); // 3 components for color
+    glVertexArrayAttribFormat(vao, 1, 3, GL_FLOAT, GL_FALSE, sizeof(GLfloat) * 3); // 3 components for color, offset by 3 floats
+    glVertexArrayAttribBinding(vao, 1, 0);                                         // Bind to binding index 0
 
     // Bind the EBO to the VAO
     glVertexArrayElementBuffer(vao, ebo);
