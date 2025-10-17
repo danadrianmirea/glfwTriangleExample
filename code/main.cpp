@@ -31,7 +31,7 @@ constexpr float t_angle_speed = 1.0f;
 float t_speed_x = 0.3f;
 float t_speed_y = 0.5f;
 
-float t_scale = 0.1f;
+float t_scale = 0.5f;
 float t_scale_speed = 0.1f;
 constexpr float t_scale_upp_limit = 0.8f;
 constexpr float t_scale_low_limit = 0.1f;
@@ -85,10 +85,11 @@ void Update(float deltaTime)
         t_speed_y = -t_speed_y;
     }
 
-    t_scale += t_scale_speed * deltaTime;
-    if (t_scale >= t_scale_upp_limit || t_scale <= t_scale_low_limit)
-    {
+    if (0) {
+      t_scale += t_scale_speed * deltaTime;
+      if (t_scale >= t_scale_upp_limit || t_scale <= t_scale_low_limit) {
         t_scale_speed = -t_scale_speed;
+      }
     }
 }
 
